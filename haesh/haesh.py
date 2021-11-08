@@ -38,20 +38,17 @@ class Haesh(object):
         expanded_ords = []
 
         for block_index in range(no_of_blocks):
-            # these additions need to be mod 64
-            first_index = self._iteration_addition(block_index, 62)
-            first_bit = last_cipherblock_bits[first_index]
-            second_bit = last_cipherblock_bits[first_index + 1]
-            index = int(f'{first_bit}{second_bit}', 2) + block_index
-            expanded_ords.append('{:02}'.format(self.expansion_permutation[index % self._expansion_value]))
+            first_bit_index = block_index*SAMPLE_SIZE
+            first_bit = last_cipherblock_bits[first_bit_index]
+            second_bit = last_cipherblock_bits[first_bit_index + 1]
+            # this addition needs to be mod 256 so that we pick a value within the array
+            index = (int(f'{first_bit}{second_bit}', 2) + block_index + self.iteration) % self._expansion_value
+            expanded_ords.append(self.expansion_permutation[index])
 
         # ensure next iteration creates an offset in the values we pick from
-        # expansion_permutation for expansion, this needs to be mod 64
-        self.iteration = self._iteration_addition(1)
+        # expansion_permutation for expansion
+        self.iteration += 1
         return expanded_ords
 
     def get_hex_digest(self):
         return '%08X' % int("".join(['{0:08b}'.format(char) for char in self.digest]), 2)
-
-    def _iteration_addition(self, additive, mod = 64):
-        return (self.iteration + additive) % (mod or self._expansion_value)
