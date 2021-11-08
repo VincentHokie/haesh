@@ -33,7 +33,3 @@ FAQ
 The short answer, *it's for a school thing.*
 
 The longer answer,  it's for a school thing and it seemed like a cool thing to do :)
-
-#### How do I get a question I have added?
-
-E-mail me at pyaes@ricmoo.com with any questions, suggestions, comments, et cetera.
