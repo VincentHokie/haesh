@@ -24,6 +24,6 @@ FAQ
 
 #### Why do this?
 
-The short answer, *it's for a school thing.*
+The short answer, it's for a school thing.
 
 The longer answer,  it's for a school thing and it seemed like a cool thing to do :)

@@ -63,7 +63,7 @@ no_of_blocks = math.ceil(len(byte_data)/BLOCK_SIZE)
 
 for block_index in range(no_of_blocks):
     block = byte_data[block_index*BLOCK_SIZE:BLOCK_SIZE+(block_index*BLOCK_SIZE)]
-    # pad the last block that may not be 16 butes long
+    # pad the last block that may not be 16 bytes long
     if len(block) < BLOCK_SIZE:
         required = BLOCK_SIZE - len(block)
         block += b'0'*required
