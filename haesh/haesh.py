@@ -16,6 +16,7 @@ class Haesh(object):
         expanded_cipherblock = self._expand_cipherblock(last_cipherblock)
         if not self.digest:
             self.digest = expanded_cipherblock
+            return
 
         # xor the current digest with the new expanded cipherblock
         self.digest = [ (int(p) ^ int(l)) for (p, l) in zip(self.digest, expanded_cipherblock) ]
