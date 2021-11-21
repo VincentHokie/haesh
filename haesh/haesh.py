@@ -28,23 +28,17 @@ class Haesh(object):
         ord_list = [str(char) for char in last_cipherblock]
         ord_string = "".join(ord_list)
         random.seed(int(ord_string))
+
+        # current #1 performance bottleneck
         random.shuffle(self.expansion_permutation)
 
-        # convert character string to bit string
-        last_cipherblock_bits = "".join(['{0:08b}'.format(char) for char in last_cipherblock])
-
-        # expand 128 bit cipherblock to 512 bits, by mapping every 2 bits to 8 bits
-        SAMPLE_SIZE = 2
-        no_of_blocks = math.ceil(len(last_cipherblock_bits)/SAMPLE_SIZE)
+        # expand 128 bit cipherblock to 512 bits, by mapping every 8 bits to 24 bits
         expanded_ords = []
 
-        for block_index in range(no_of_blocks):
-            first_bit_index = block_index*SAMPLE_SIZE
-            first_bit = last_cipherblock_bits[first_bit_index]
-            second_bit = last_cipherblock_bits[first_bit_index + 1]
+        for block_index in last_cipherblock:
+            first_index = (block_index + self.iteration) % self._expansion_value
             # this addition needs to be mod 256 so that we pick a value within the array
-            index = (int(f'{first_bit}{second_bit}', 2) + block_index + self.iteration) % self._expansion_value
-            expanded_ords.append(self.expansion_permutation[index])
+            expanded_ords.extend([self.expansion_permutation[first_index], self.expansion_permutation[(first_index + 1) % self._expansion_value], self.expansion_permutation[(first_index + 2) % self._expansion_value] ])
 
         # ensure next iteration creates an offset in the values we pick from
         # expansion_permutation for expansion
