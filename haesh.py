@@ -67,6 +67,8 @@ for block_index in range(no_of_blocks):
     if len(block) < BLOCK_SIZE:
         required = BLOCK_SIZE - len(block)
         block += b'0'*required
+
+    # current #2 performance bottleneck, possibly unavoidable
     aes_cbc.encrypt(block)
     haesh.calculate_digest(aes_cbc._last_cipherblock)
 
