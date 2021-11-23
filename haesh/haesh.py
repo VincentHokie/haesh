@@ -38,7 +38,12 @@ class Haesh(object):
         for block_index in last_cipherblock:
             first_index = (block_index + self.iteration) % self._expansion_value
             # this addition needs to be mod 256 so that we pick a value within the array
-            expanded_ords.extend([self.expansion_permutation[first_index], self.expansion_permutation[(first_index + 1) % self._expansion_value], self.expansion_permutation[(first_index + 2) % self._expansion_value], self.expansion_permutation[(first_index + 3) % self._expansion_value]])
+            expanded_ords.extend([
+                self.expansion_permutation[first_index],
+                self.expansion_permutation[(first_index + 1) % self._expansion_value],
+                self.expansion_permutation[(first_index + 2) % self._expansion_value],
+                self.expansion_permutation[(first_index + 3) % self._expansion_value]
+            ])
 
         # ensure next iteration creates an offset in the values we pick from
         # expansion_permutation for expansion
